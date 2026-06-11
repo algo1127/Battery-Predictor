@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F5F9">
+
+    <!-- 1. The Animated Liquid Background -->
+    <com.algo1127.batterychargeguess.BatteryWaveView
+        android:id="@+id/waveBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- 2. SwipeRefreshLayout for Pull-to-Refresh -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingClass">
+
+        <!-- 3. The Foreground Content -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:background="@android:color/transparent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
+                android:paddingBottom="32dp"
+                android:animateLayoutChanges="true">
+
+                <Button
+                    android:id="@+id/btnCategorizeApps"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Categorize Apps"
+                    android:textColor="#2563EB"
+                    android:backgroundTint="@android:color/transparent"
+                    android:background="@drawable/corporate_outline_button"
+                    android:textAllCaps="false"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginTop="8dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:stateListAnimator="@animator/button_press" />
+
+                <!-- 1st: Category Predictor -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/corporate_card_bg"
+                    android:padding="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:elevation="4dp"
+                    android:outlineProvider="background"
+                    android:layoutAnimation="@anim/layout_animation_fade">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Category Predictor"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#0F172A"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="16dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="All Categories"
+                        android:textColor="#64748B"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="12dp"/>
+
+                    <GridLayout
+                        android:id="@+id/categoryGrid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="1"
+                        android:alignmentMode="alignMargins"
+                        android:useDefaultMargins="true" />
+
+                </LinearLayout>
+
+                <!-- 2nd: Core Battery Metrics -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/corporate_card_bg"
+                    android:padding="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:elevation="4dp"
+                    android:outlineProvider="background"
+                    android:layoutAnimation="@anim/layout_animation_fade">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Core Battery Metrics"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#0F172A"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Battery: Waiting..."
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        android:textColor="#0F172A"
+                        android:fontFamily="sans-serif" />
+
+                    <TextView
+                        android:id="@+id/tvStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status: Waiting..."
+                        android:textSize="16sp"
+                        android:textColor="#2563EB"
+                        android:layout_marginTop="4dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:background="@drawable/corporate_frosted_bg"
+                            android:padding="12dp"
+                            android:layout_marginEnd="8dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Time to Full"
+                                android:textSize="12sp"
+                                android:textColor="#64748B"/>
+                            <TextView
+                                android:id="@+id/tvPredictionFull"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Waiting..."
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:textColor="#334155"
+                                android:layout_marginTop="4dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:background="@drawable/corporate_frosted_bg"
+                            android:padding="12dp"
+                            android:layout_marginStart="8dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Time to Empty"
+                                android:textSize="12sp"
+                                android:textColor="#64748B"/>
+                            <TextView
+                                android:id="@+id/tvPredictionEmpty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Waiting..."
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:textColor="#334155"
+                                android:layout_marginTop="4dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnToggleService"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="Start Tracking"
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="#2563EB"
+                        android:textAllCaps="false"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginTop="24dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:stateListAnimator="@animator/button_press" />
+
+                    <Button
+                        android:id="@+id/btnGrantUsage"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="Grant App Usage Permission"
+                        android:textColor="#2563EB"
+                        android:backgroundTint="@android:color/transparent"
+                        android:background="@drawable/corporate_outline_button"
+                        android:textAllCaps="false"
+                        android:layout_marginTop="8dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:stateListAnimator="@animator/button_press" />
+
+                    <Button
+                        android:id="@+id/btnShowMemory"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="View &amp; Clear App Memory"
+                        android:textColor="#2563EB"
+                        android:backgroundTint="@android:color/transparent"
+                        android:background="@drawable/corporate_outline_button"
+                        android:textAllCaps="false"
+                        android:layout_marginTop="8dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:stateListAnimator="@animator/button_press" />
+                </LinearLayout>
+
+                <!-- 3rd: True Battery Health -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/corporate_card_bg"
+                    android:padding="20dp"
+                    android:elevation="4dp"
+                    android:outlineProvider="background"
+                    android:layoutAnimation="@anim/layout_animation_fade">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="True Battery Health"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#0F172A"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="True Capacity"
+                            android:textSize="14sp"
+                            android:textColor="#64748B"/>
+                        <TextView
+                            android:id="@+id/tvTrueCapacity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Waiting..."
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#0F172A"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvDesignCapacity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Design Capacity: ... mAh"
+                        android:textSize="15sp"
+                        android:textColor="#334155"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:letterSpacing="0.02"
+                        android:padding="12dp"
+                        android:background="@drawable/corporate_frosted_bg"
+                        android:layout_marginBottom="12dp" />
+                    <TextView
+                        android:id="@+id/tvHealthPercent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Health: --%"
+                        android:textSize="36sp"
+                        android:textStyle="bold"
+                        android:textColor="#059669"
+                        android:fontFamily="sans-serif-medium"
+                        android:layout_marginBottom="12dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Live Coulomb Counter"
+                            android:textSize="14sp"
+                            android:textColor="#64748B"/>
+                        <TextView
+                            android:id="@+id/tvLiveTracking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Idle"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#334155"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnResetHealth"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="Reset Health Data"
+                        android:textColor="#DC2626"
+                        android:backgroundTint="@android:color/transparent"
+                        android:background="@drawable/corporate_danger_outline"
+                        android:textAllCaps="false"
+                        android:layout_marginTop="24dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:stateListAnimator="@animator/button_press" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</FrameLayout>
