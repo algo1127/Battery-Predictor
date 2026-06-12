@@ -15,8 +15,8 @@ android {
         applicationId = "com.algo1127.batterychargeguess"
         minSdk = 28
         targetSdk = 36
-        versionCode = 11
-        versionName = "2026-06-11A"
+        versionCode = 12
+        versionName = "2026-06-12A"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
