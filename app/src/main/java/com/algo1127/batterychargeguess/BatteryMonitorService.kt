@@ -124,7 +124,7 @@ class BatteryMonitorService : Service() {
             if (deltaTime > 0) {
                 val share = deltaTime.toFloat() / totalTime
 
-                if (share >= 0.15f) {
+                if (share >= 0.05f) {
                     val category = AppCategorizer.categorize(applicationContext, packageName)
 
                     if (category != null && category != "Standby" && !categoriesProcessed.contains(category)) {
