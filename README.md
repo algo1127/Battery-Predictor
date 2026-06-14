@@ -1,7 +1,7 @@
 # 🔋 Battery Predictor
 *A real-time, ML-enhanced battery analytics engine that actually learns your usage patterns.*
 
-![Version](https://img.shields.io/badge/Version-v11%20(2026--06--11A)-blue)
+![Version](https://img.shields.io/badge/Version-v11%20(2026--06--12A)-blue)
 ![Language](https://img.shields.io/badge/Language-Kotlin-7F52FF)
 ![Platform](https://img.shields.io/badge/Platform-Android%208.0%2B-3DDC84)
 ![License](https://img.shields.io/badge/License-MIT-green)
